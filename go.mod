@@ -1,4 +1,4 @@
-module Service_Restful
+module RESTful_API
 
 go 1.17
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Service_Restful/service"
+	"RESTful_API/service"
 )
 
 func main() {

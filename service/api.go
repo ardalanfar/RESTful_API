@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"Service_Restful/app/handler"
-	"Service_Restful/database"
-	"Service_Restful/models"
+	"RESTful_API/app/handler"
+	"RESTful_API/database"
+	"RESTful_API/models"
 
 	"github.com/gorilla/mux"
 	"gorm.io/gorm"
@@ -21,8 +21,9 @@ func (app *App) Initialize() {
 	app.Router = mux.NewRouter()
 	app.DB = database.Connect()
 
-	models.UserMigrate(app.DB)
+	models.UsersMigrate(app.DB)
 	models.CourseMigrate(app.DB)
+	models.TeacherMigrate(app.DB)
 
 	app.SetRouters()
 }
@@ -36,7 +37,9 @@ func (app *App) SetRouters() {
 	app.Post("/course/{id}", app.GetCourse)
 	app.Post("/course", app.CreateCourse)
 
-	app.Post("/student/{name_c}", app.Show_UserCourse)
+	app.Post("/student/{name_c}", app.Get_UserCourse)
+
+	app.Post("/teacher/{name_t}", app.Get_Users_inTeacher)
 }
 
 /*----------------------------------------------------------*/
@@ -50,7 +53,7 @@ func (app *App) Post(path string, f func(w http.ResponseWriter, r *http.Request)
 }
 
 /*----------------------------------------------------------*/
-//user
+//users
 
 func (app *App) GetUsers(w http.ResponseWriter, r *http.Request) {
 	handler.Getusers(app.DB, w, r)
@@ -82,13 +85,19 @@ func (app *App) CreateCourse(w http.ResponseWriter, r *http.Request) {
 /*----------------------------------------------------------*/
 //controllers
 
-func (app *App) Show_UserCourse(w http.ResponseWriter, r *http.Request) {
-	handler.Show_usercourse(app.DB, w, r)
+//Show students in course
+func (app *App) Get_UserCourse(w http.ResponseWriter, r *http.Request) {
+	handler.Get_usercourse(app.DB, w, r)
+}
+
+//Show students in teacher
+func (app *App) Get_Users_inTeacher(w http.ResponseWriter, r *http.Request) {
+	handler.Get_users_inTeacher(app.DB, w, r)
 }
 
 /*----------------------------------------------------------*/
 
-// Run the app on it's router
+//Run the app on it's router
 func (app *App) Run(host string) {
 	log.Fatal(http.ListenAndServe(host, app.Router))
 }

@@ -1,7 +1,7 @@
 package database
 
 import (
-	"Service_Restful/conf"
+	"RESTful_API/conf"
 	"fmt"
 	"log"
 

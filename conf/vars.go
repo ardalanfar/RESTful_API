@@ -11,6 +11,7 @@ type DBConfig struct {
 	Charset  string
 }
 
+//Set configs
 func GetConfig() *Config {
 	return &Config{
 		DB: &DBConfig{

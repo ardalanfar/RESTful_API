@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"Service_Restful/models"
+	"RESTful_API/models"
 	"encoding/json"
 	"net/http"
 
@@ -11,22 +11,22 @@ import (
 
 func Getusers(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var users []models.User
+	var users []models.Users
 	db.Find(&users)
 	json.NewEncoder(w).Encode(users)
 }
 
 func Getuser(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
-	var user models.User
-	db.First(&user, params["id"])
+	param := mux.Vars(r)
+	var user models.Users
+	db.First(&user, param["id"])
 	json.NewEncoder(w).Encode(user)
 }
 
 func Createuser(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var user models.User
+	var user models.Users
 	json.NewDecoder(r.Body).Decode(&user)
 	db.Create(&user)
 	json.NewEncoder(w).Encode(user)

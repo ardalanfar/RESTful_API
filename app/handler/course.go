@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"Service_Restful/models"
+	"RESTful_API/models"
 	"encoding/json"
 	"net/http"
 
@@ -18,9 +18,9 @@ func Getcourses(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 func Getcourse(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r)
+	param := mux.Vars(r)
 	var course models.Course
-	db.First(&course, params["id"])
+	db.First(&course, param["id"])
 	json.NewEncoder(w).Encode(course)
 }
 
