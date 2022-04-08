@@ -39,7 +39,7 @@ func (app *App) SetRouters() {
 
 	app.Post("/student/{name_c}", app.Get_UserCourse)
 
-	app.Post("/teacher/{name_t}", app.Get_Users_inTeacher)
+	app.Get("/report", app.Get_Report)
 }
 
 /*----------------------------------------------------------*/
@@ -90,9 +90,9 @@ func (app *App) Get_UserCourse(w http.ResponseWriter, r *http.Request) {
 	handler.Get_usercourse(app.DB, w, r)
 }
 
-//Show students in teacher
-func (app *App) Get_Users_inTeacher(w http.ResponseWriter, r *http.Request) {
-	handler.Get_users_inTeacher(app.DB, w, r)
+//Show students and teachers and courses
+func (app *App) Get_Report(w http.ResponseWriter, r *http.Request) {
+	handler.Get_report(app.DB, w, r)
 }
 
 /*----------------------------------------------------------*/
@@ -101,3 +101,5 @@ func (app *App) Get_Users_inTeacher(w http.ResponseWriter, r *http.Request) {
 func (app *App) Run(host string) {
 	log.Fatal(http.ListenAndServe(host, app.Router))
 }
+
+/*----------------------------------------------------------*/
